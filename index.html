@@ -7,12 +7,37 @@
 		<link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
 		<link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
 		<link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+		<style media="screen">
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: 'Avenir Next', sans-serif;
+				font-weight: 800;
+				font-style: italic;
+				color: #fff;
+				text-transform: none;
+				/* text-shadow: aquamarine -.05em 0.01em 0, #BD10E0 -.075em 0.02em 0;
+				transition: text-shadow 4s; */
+			}
+			.reveal .progress {
+				color: #fff
+			}
+
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<section><h1>I'm Ben</h1></section>
+					<section><h2>I talk a lot</h2></section>
+					<section><h2>pipe-share</h2></section>
+					<section><h1>20s</h1></section>
+				</section>
+
+				<section>
+					<section>
+						<h1 class="rainbow">LEDs</h1>
+					</section>
+				</section>
 			</div>
 		</div>
 
@@ -21,7 +46,10 @@
 
 		<script>
 			Reveal.initialize({
-				controls:false
+				history: true,
+				controls: false,
+				transition: 'none',
+				progress: 'red'
 			});
 		</script>
 	</body>
