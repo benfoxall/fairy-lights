@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280px" height="720px" viewBox="0 0 1280 720" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #000000;">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>http-annotated-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <text id="text-1" font-family="AvenirNext-HeavyItalic, Avenir Next" font-size="110" font-style="italic" font-weight="600" fill="#50E3C2">
+            <tspan x="881.465" y="234">Bumf</tspan>
+        </text>
+        <filter x="-1.2%" y="-2.3%" width="104.3%" height="104.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="3" dy="-2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.739875019   0 0 0 0 0.0611469224   0 0 0 0 0.879000783  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="-2" dy="2" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.314369351   0 0 0 0 0.8883757   0 0 0 0 0.759899616  0 0 0 1 0" type="matrix" in="shadowOffsetOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="http-annotated-1">
+            <text id="Accept:text/html,app" font-family="AvenirNext-HeavyItalic, Avenir Next" font-size="18" font-style="italic" font-weight="600">
+                <tspan x="38" y="142" fill="#50E3C2">Accept:text/html,application/xhtml+xml,application/xml; \</tspan>
+                <tspan x="38" y="167" fill="#50E3C2">q=0.9,image/webp,image/apng,*/*;q=0.8</tspan>
+                <tspan x="38" y="192" fill="#50E3C2">Accept-Encoding:gzip, deflate, br</tspan>
+                <tspan x="38" y="217" fill="#50E3C2">Accept-Language:en-US,en;q=0.9</tspan>
+                <tspan x="38" y="242" fill="#50E3C2">Cache-Control:no-cache</tspan>
+                <tspan x="38" y="267" fill="#50E3C2">Connection:keep-alive</tspan>
+                <tspan x="38" y="292" fill="#50E3C2">Content-Length:15</tspan>
+                <tspan x="38" y="317" fill="#50E3C2">Content-Type:application/x-www-form-urlencoded</tspan>
+                <tspan x="38" y="342" fill="#50E3C2">DNT:1</tspan>
+                <tspan x="38" y="367" fill="#50E3C2">Host:192.168.0.12</tspan>
+                <tspan x="38" y="392" fill="#50E3C2">Origin:http://localhost:3000</tspan>
+                <tspan x="38" y="417" fill="#50E3C2">Pragma:no-cache</tspan>
+                <tspan x="38" y="442" fill="#50E3C2">Referer:http://localhost:3000/</tspan>
+                <tspan x="38" y="467" fill="#50E3C2">Upgrade-Insecure-Requests:1</tspan>
+                <tspan x="38" y="492" fill="#50E3C2">User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) \</tspan>
+                <tspan x="38" y="517" fill="#50E3C2">AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36</tspan>
+                <tspan x="38" y="542" fill="#50E3C2"></tspan>
+                <tspan x="38" y="567" fill="#50E3C2">color=%</tspan>
+                <tspan x="113.294" y="567" fill="#FFFFFF">ffcc0000</tspan>
+            </text>
+            <g id="Bumf" fill-opacity="1" fill="#50E3C2">
+                <use filter="url(#filter-2)" xlink:href="#text-1"></use>
+                <use xlink:href="#text-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>
