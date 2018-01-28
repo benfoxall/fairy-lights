@@ -13,6 +13,28 @@
   <body>
     <div class="reveal">
       <div class="slides">
+        <section id="setup">
+          <h3 class="badge">settings</h3>
+          <form class="fullscreen" style="background: #444" id="settings">
+            <label>
+              lanterns
+              <input type="url" name="lantern" placeholder="http://localhost:3000">
+            </label>
+            <label>
+              layout
+              <input type="url" name="layout" placeholder="http://foo.json">
+            </label>
+            <label>
+              width
+              <input type="number" name="width">
+            </label>
+            <label>
+              height
+              <input type="number" name="height">
+            </label>
+            <p id="settings-error"></p>
+          </form>
+        </section>
         <section>
           <section><h1>I'm Ben</h1></section>
           <section><h2>I talk a lot</h2></section>
@@ -160,14 +182,14 @@
 
         <section>
           <section>
-            <h2>Adding context:</h2>
+            <h2>Adding (more) context:</h2>
             <h3>{A: [{n:0, x: 0}, {n: 50, x: 1}]}</h3>
           </section>
           <section>
             <h3>WebGL</h3>
           </section>
           <section>
-            <iframe data-src="foo" class="fullscreen"></iframe>
+            <iframe data-lantern-src="/scripts/ambient.html" class="fullscreen"></iframe>
           </section>
 
           <section>
@@ -264,6 +286,60 @@
     <script src="node_modules/reveal.js/js/reveal.js"></script>
 
     <script>
+
+
+      const qs  = document.querySelector.bind(document)
+      const qsa = document.querySelectorAll.bind(document)
+
+      const settings = window.setttings = {}
+
+      for(let input of qsa('#settings input[name]')) {
+
+        setttings[input.name] = input.value = localStorage.getItem(`config:${input.name}`)
+
+        input.addEventListener('change', ({target}) =>
+          localStorage.setItem(
+            `config:${target.name}`,
+            setttings[target.name] = target.value
+          )
+        )
+      }
+
+      const setsrcs = async () => {
+        const a = document.createElement('a')
+        a.href = settings.lantern
+        const { origin } = a
+
+        const res = await fetch(settings.layout)
+
+        if(res.status !== 200) throw new Error(`Layout ${res.status}ed`)
+
+        const layout = await res.json()
+
+        const hash = btoa(JSON.stringify({
+          layout,
+          development: true,
+          dark: true
+        }))
+
+        for(let {dataset} of qsa('[data-lantern-src]')  ) {
+          dataset.src = `${origin}${dataset.lanternSrc}#${hash}`
+        }
+      }
+
+      const updatesrcs = () =>
+        setsrcs()
+          .then(
+            () => qs('#settings-error').textContent = '🌈',
+            e  => qs('#settings-error').textContent = e
+          )
+
+      for(let input of qsa('input[name=lantern], input[name=layout]')) {
+        input.addEventListener('change', updatesrcs)
+      }
+
+      updatesrcs()
+
       Reveal.initialize({
         margin: 0,
         history: true,
@@ -280,9 +356,26 @@
       });
 
 
+      const {width, height} = Reveal.getConfig()
+
+      // set css vars for fullscreen
       const rootStyle = document.body.style
-      rootStyle.setProperty('--reveal-width', Reveal.getConfig().width + 'px')
-      rootStyle.setProperty('--reveal-height', Reveal.getConfig().height + 'px')
+      rootStyle.setProperty('--reveal-width', `${width}px`)
+      rootStyle.setProperty('--reveal-height', `${height}px`)
+
+
+      // set placeholders for height/width based on screen dimensions
+      // (some projectors are weird)
+      const sw = qs('#settings input[name=width]')
+      const sh = qs('#settings input[name=height]')
+      const setw = () => sw.placeholder = parseFloat(sh.value) * (width/height)
+      const seth = () => sh.placeholder = parseFloat(sw.value) / (width/height)
+
+      sh.addEventListener('input', setw)
+      sw.addEventListener('input', seth)
+
+      if(sh.value) setw()
+      if(sw.value) seth()
 
     </script>
   </body>
