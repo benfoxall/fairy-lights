@@ -1,63 +1,259 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>fairy lights</title>
-		<link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
-		<link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
-		<link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
-		<style media="screen">
-			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-				font-family: 'Avenir Next', sans-serif;
-				font-weight: 800;
-				font-style: italic;
-				color: #fff;
-				text-transform: none;
-				transition: text-shadow 10s;
-				text-shadow: aquamarine 0 0 0, #BD10E0 0 0 0;
-			}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>fairy lights</title>
+    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
+    <link rel="stylesheet" href="css/syntax.css">
+    <style media="screen">
+      body {
+        background: #000;
+        background-color: #000;
+      }
+      body .reveal {
+        font-family: 'Avenir Next', sans-serif;
+      }
 
-			.reveal .present > h1, .reveal .present > h2,
-			.reveal .present > h3, .reveal .present > h4,
-			.reveal .present > h5, .reveal .present > h6 {
-				text-shadow: aquamarine -.04em 0.02em 0, #BD10E0 .04em -0.02em 0;
 
-			}
-			.reveal .progress {
-				color: #fff
-			}
+      .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+        font-family: 'Avenir Next', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+        color: #fff;
+        text-transform: none;
+        transition: text-shadow 10s;
+        text-shadow: aquamarine 0 0 0, #BD10E0 0 0 0;
+      }
 
-		</style>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<section><h1>I'm Ben</h1></section>
-					<section><h2>I talk a lot</h2></section>
-					<section><h2>pipe-share</h2></section>
-					<section><h1>20s</h1></section>
-				</section>
+      .reveal .present > h1, .reveal .present > h2,
+      .reveal .present > h3, .reveal .present > h4,
+      .reveal .present > h5, .reveal .present > h6 {
+        text-shadow: aquamarine -.04em 0.02em 0, #BD10E0 .04em -0.02em 0;
 
-				<section>
-					<section>
-						<h1 class="rainbow">LEDs</h1>
-					</section>
-				</section>
-			</div>
-		</div>
+      }
+      .reveal .progress {
+        color: aquamarine;
+      }
 
-		<script src="node_modules/reveal.js/lib/js/head.min.js"></script>
-		<script src="node_modules/reveal.js/js/reveal.js"></script>
+      .reveal pre code {
+        background: #000
+      }
 
-		<script>
-			Reveal.initialize({
-				history: true,
-				controls: false,
-				transition: 'none',
-				progress: 'red'
-			});
-		</script>
-	</body>
+      .reveal footer {
+        position: fixed;
+        bottom:0;
+        left:0;
+        text-shadow: #000 0 0 .3em;
+        background: rgba(0,0,0,0.4);
+        width: 100%;
+        font-size: .5em;
+        padding: 1em;
+        margin:0;
+        text-align: left;
+      }
+
+      .reveal a {
+        color: #fff;
+      }
+
+      .reveal section.left {
+        text-align: left;
+      }
+
+      .reveal section.left h1,
+      .reveal section.left h2,
+      .reveal section.left h3,
+      .reveal section.left h4,
+      .reveal section.left h5,
+      .reveal section.left h6 {
+        margin-left: 5vw;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section><h1>I'm Ben</h1></section>
+          <section><h2>I talk a lot</h2></section>
+          <section><h2>pipe-share</h2></section>
+          <section><h1>20s</h1></section>
+          <!-- <section>
+            <h2>The kindness to help people be proud of the things they do</h2>
+            <h1>RIP JP</h1>
+          </section> -->
+        </section>
+
+        <section>
+          <section>
+            <h1>LEDs</h1>
+          </section>
+          <section>
+            <h1>[led]</h1>
+          </section>
+          <section>
+            <h1>[PWM]</h1>
+          </section>
+          <section>
+            <h1>[espriuno]</h1>
+          </section>
+          <section>
+            <h1>[tricolor LED]</h1>
+          </section>
+          <section>
+            <h1>Communicating with fairy lights</h1>
+          </section>
+          <section data-background="images/nodemcu.jpg">
+            <footer>
+              <a href="https://commons.wikimedia.org/w/index.php?curid=39477865">
+                source: wikipedia.org/wiki/NodeMCU (Vowstar)
+              </a>
+            </footer>
+          </section>
+          <section>
+            <h1>Browser -> HTTP POST -> MCU -> FAIRY LIGHTS</h1>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre><code data-trim>
+            &lt;form action="http://192.168.0.12" method="POST" &gt;
+              &lt;input name="color" type="color"&gt;
+              &lt;input type="submit"&gt;
+            &lt;/form&gt;
+            </code></pre>
+          </section>
+          <section>
+            <h1>It works!</h1>
+          </section>
+          <section>
+            <pre class="stretch"><code data-trim>
+              Accept:text/html,application/xhtml+xml,application/xml; \
+              q=0.9,image/webp,image/apng,*/*;q=0.8
+              Accept-Encoding:gzip, deflate, br
+              Accept-Language:en-US,en;q=0.9
+              Cache-Control:no-cache
+              Connection:keep-alive
+              Content-Length:15
+              Content-Type:application/x-www-form-urlencoded
+              DNT:1
+              Host:192.168.0.12
+              Origin:http://localhost:3000
+              Pragma:no-cache
+              Referer:http://localhost:3000/
+              Upgrade-Insecure-Requests:1
+              User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) \
+              AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+              color=%ffcc0000
+            </code></pre>
+          </section>
+
+          <section data-background-size="contain" data-background="images/http.svg">
+          </section>
+          <section data-background-size="contain" data-background="images/http-annotated-1.svg">
+          </section>
+          <section data-background-size="contain" data-background="images/http-annotated-2.svg">
+          </section>
+          <section>
+            <h1>TCP vs UDP</h1>
+          </section>
+          <section>
+            <pre><code data-trim>
+              const dgram = require('dgram')
+              const client = dgram.createSocket('udp4')
+              const colour = String.fromCharCode(255, 150, 0)
+              client.send(Buffer.from(`FILL ${colour}`), 8080, 10)
+            </code></pre>
+          </section>
+          <section>
+            <h6>[browser → server → MCU → fairy lights]</h6>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Demo</h1>
+            <h3>&lt;input type="color" /&gt;</h3>
+          </section>
+          <section>
+            <input type="color" />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Adding some context:</h3>
+            <h1>individual lights</h1>
+          </section>
+          <section class="left">
+            <h1>Demo</h1>
+            <h2>CSS</h2>
+            <pre><code data-trim>
+              &lt;ol&gt;
+                &lt;li&gt;1&lt;/li&gt;
+                &lt;li&gt;2&lt;/li&gt;
+                &lt;li&gt;3&lt;/li&gt;
+                &lt;li&gt;4&lt;/li&gt;
+              &lt;/ol&gt;
+              &lt;style&gt;
+                li:nth-child(2n) {background: red}
+              &lt;/style&gt;
+            </code></pre>
+          </section>
+          <section>
+            <h1>
+            <select>
+              <option>CSS 1</option>
+              <option>CSS 2</option>
+              <option>CSS 3</option>
+            </select>
+            <style media="screen">
+              .reveal select {
+                background: black;
+                border-radius: 0;
+                zoom: 3;
+                -webkit-appearance: none;
+                color: aquamarine;
+                border: none;
+                outline: none !important;
+                float: right;
+              }
+            </style>
+          </h1>
+            <ol>
+              <li />
+              <li />
+              <li />
+              <li />
+              <li />
+              <li />
+            </ol>
+          </section>
+        </section>
+
+
+      </div>
+    </div>
+
+    <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+    <script src="node_modules/reveal.js/js/reveal.js"></script>
+
+    <script>
+      Reveal.initialize({
+        margin: 0,
+        history: true,
+        controls: false,
+        transition: 'none',
+        progress: 'red',
+        dependencies: [
+          { src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
 </html>
