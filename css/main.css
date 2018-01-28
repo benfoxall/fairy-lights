@@ -1,0 +1,106 @@
+body {
+  background: #000;
+  background-color: #000;
+}
+body .reveal {
+  font-family: 'Avenir Next', sans-serif;
+}
+
+/* Replace 20px padding (no idea why that's there) */
+.reveal .slides > section, .reveal .slides > section > section {
+  padding: 0;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  font-family: 'Avenir Next', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  color: #fff;
+  text-transform: none;
+  transition: text-shadow 10s;
+  text-shadow: aquamarine 0 0 0, #BD10E0 0 0 0;
+}
+
+.reveal .present > h1, .reveal .present > h2,
+.reveal .present > h3, .reveal .present > h4,
+.reveal .present > h5, .reveal .present > h6 {
+  text-shadow: aquamarine -.04em 0.02em 0, #BD10E0 .04em -0.02em 0;
+
+}
+.reveal .progress {
+  color: aquamarine;
+}
+
+.reveal pre code {
+  background: #000
+}
+
+.reveal footer {
+  position: fixed;
+  bottom:0;
+  left:0;
+  text-shadow: #000 0 0 .3em;
+  background: rgba(0,0,0,0.4);
+  width: 100%;
+  font-size: .5em;
+  padding: 1em;
+  margin:0;
+  text-align: left;
+}
+
+.reveal a {
+  color: #fff;
+}
+
+.reveal section.left {
+  text-align: left;
+}
+
+.reveal section.left h1,
+.reveal section.left h2,
+.reveal section.left h3,
+.reveal section.left h4,
+.reveal section.left h5,
+.reveal section.left h6 {
+  margin-left: 5%;
+}
+
+
+.reveal select {
+  font-family: 'Avenir Next', sans-serif;
+  font-weight: 100;
+  font-style: italic;
+  background: black;
+  border-radius: 0;
+  zoom: 3;
+  -webkit-appearance: none;
+  color: #fff;
+  border: none;
+  outline: none;
+  float: right;
+  margin-right: .5em;
+}
+
+ol.light-list {
+  margin: 0;
+  text-align: center;
+  margin-top: 1em;
+}
+
+ol.light-list li {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  border: #fff 1px solid;
+
+  background: #000;
+}
+
+
+.fullscreen {
+  display: block;
+  background: blue;
+  height: var(--reveal-height);
+  width: var(--reveal-width);
+}
