@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280px" height="720px" viewBox="0 0 1280 720" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>graph-node</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="graph-node">
+            <text id="BROWSER" font-family="AvenirNext-Heavy, Avenir Next" font-size="60" font-weight="600" fill="#FFFFFF">
+                <tspan x="49" y="377">BROWSER</tspan>
+            </text>
+            <text id="FAIRY-LIGHTS" font-family="AvenirNext-Heavy, Avenir Next" font-size="28" font-weight="600" fill="#FFFFFF">
+                <tspan x="1039" y="328">FAIRY LIGHTS</tspan>
+            </text>
+            <text id="MCU" font-family="AvenirNext-Heavy, Avenir Next" font-size="34" font-weight="600" fill="#FFFFFF">
+                <tspan x="826" y="334">MCU</tspan>
+            </text>
+            <path d="M387.5,358.5 L521.5,358.5" id="Line" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <path id="Line-decoration-1" d="M521.5,358.5 L510.7,355.5 L510.7,361.5 L521.5,358.5 Z" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <path d="M938.309735,327.5 L1007.78508,327.5" id="Line-2" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <path id="Line-2-decoration-1" d="M1007.78508,327.5 L996.985076,324.5 L996.985076,330.5 L1007.78508,327.5 Z" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <text id="FAIRY-LIGHTS" font-family="AvenirNext-Heavy, Avenir Next" font-size="28" font-weight="600" fill="#FFFFFF">
+                <tspan x="1039" y="398">FAIRY LIGHTS</tspan>
+            </text>
+            <text id="MCU" font-family="AvenirNext-Heavy, Avenir Next" font-size="34" font-weight="600" fill="#FFFFFF">
+                <tspan x="826" y="404">MCU</tspan>
+            </text>
+            <path d="M938.309735,397.5 L1007.78508,397.5" id="Line-2" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <path id="Line-2-decoration-1" d="M1007.78508,397.5 L996.985076,394.5 L996.985076,400.5 L1007.78508,397.5 Z" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <text id="SERVER" font-family="AvenirNext-Heavy, Avenir Next" font-size="34" font-weight="600" fill="#FFFFFF">
+                <tspan x="546" y="365">SERVER</tspan>
+            </text>
+            <path d="M704.358407,358.5 L784.751303,358.5" id="Line-2" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <path id="Line-2-decoration-1" d="M784.751303,358.5 L773.951303,355.5 L773.951303,361.5 L784.751303,358.5 Z" stroke="#BD10E0" stroke-width="7" stroke-linecap="round"></path>
+            <text id="WS" font-family="AvenirNext-Heavy, Avenir Next" font-size="60" font-weight="600" fill="#1BECD6">
+                <tspan x="398" y="294">WS</tspan>
+            </text>
+            <text id="UDP" font-family="AvenirNext-Heavy, Avenir Next" font-size="60" font-weight="600" fill="#1BECD6">
+                <tspan x="689" y="294">UDP</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

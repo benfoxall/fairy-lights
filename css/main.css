@@ -36,7 +36,8 @@ body .reveal {
 }
 
 .reveal pre code {
-  background: #000
+  background: transparent;
+  scroll-behavior: auto;
 }
 
 .reveal footer {
@@ -147,4 +148,12 @@ input[type=text], input[type=url], input[type=number] {
 #settings-error  {
   margin: 10vw 5vw;
   color: #f08
+}
+
+.reveal .slides section .fragment.strike.visible {
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

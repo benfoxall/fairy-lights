@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="/favicon.ico" />
-    <title>fairy lights</title>
+    <title>FAIRY LIGHTS</title>
     <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
     <link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
     <link rel="stylesheet" href="css/syntax.css">
@@ -37,16 +37,35 @@
         </section>
         <section>
           <section><h1>I'm Ben</h1></section>
-          <section><h2>I talk a lot</h2></section>
-          <section><h2>pipe-share</h2></section>
-          <section><h1>20s</h1></section>
-          <!-- <section>
-            <h2>The kindness to help people be proud of the things they do</h2>
-            <h1>RIP JP</h1>
-          </section> -->
+          <section><h2>I sometimes give talks</h2></section>
+          <!-- <section><h3>Barcelona, Boston, Berlin, Brighton, Milton Keynes, San&nbsp;Francisco, Singapore, Toronto …</h3></section> -->
+          <section><h4>Full Stack Fest, Full Stack London, Fluent CA, Breaking Borders, Render, A Day of REST, Mega Meetup, Frontier Conference, SimpleWeb Hack, Marlow[dev], CSV Conference, JSMonthly London, Render, AsyncJS, Reasons.to, UpFrontConf, jQueryUK, Breaking Borders, ffconf, All Your Base Conference, MK Geek Night, Talk Web Design, FutureJS, London JS Conf, MKGN, JSOxford, jQuery UK</h4></section>
+          <section><h3>VR, serverless, phantomjs, css, service workers, indexedDB, web audio, graphics, visualisation, realtime, data, running, d3, webrtc, websockets, MQTT, IoT, emoji, ASTs, micro-hacks, array buffers, positioning, the web platform, the web, queen victoria, hardware…</h3></section>
+          <section>
+            <h2>pipe-share</h2>
+            <h1 class="fragment">OGN#20</h1>
+          </section>
+          <section>
+              <h1 class="fragment strike">1 minute</h1>
+              <h1 class="fragment">20 seconds</h1>
+          </section>
+          <section
+            data-background-size="contain"
+            data-background="images/JP.jpg">
+          </section>
+          <section>
+            <h2>The energy &amp; kindness to help people be proud of the things they do</h2>
+            <h1 class="fragment">RIP JP</h1>
+          </section>
+          <section>
+            
+          </section>
         </section>
 
         <section>
+          <section>
+            <h1>Fairy Lights</h1>
+          </section>
           <section>
             <h1>LEDs</h1>
           </section>
@@ -63,7 +82,13 @@
             <h1>[tricolor LED]</h1>
           </section>
           <section>
-            <h1>Communicating with fairy lights</h1>
+            <h1>[WS2811]</h1>
+          </section>
+          <section>
+            <h1>[WS2811s]</h1>
+          </section>
+          <section>
+            <h1>Communicating with our LEDs</h1>
           </section>
           <section data-background="images/nodemcu.jpg">
             <footer>
@@ -75,8 +100,9 @@
         </section>
 
         <section>
-          <section>
-            <h1>Browser -> HTTP POST -> MCU -> FAIRY LIGHTS</h1>
+          <section
+            data-background-size="contain"
+            data-background="images/graph-basic.svg">
           </section>
           <section>
             <pre><code data-trim>
@@ -88,6 +114,7 @@
           </section>
           <section>
             <h1>It works!</h1>
+            <!-- todo -->
           </section>
           <section
             data-background-size="contain"
@@ -102,7 +129,7 @@
             data-background="images/http-annotated-2.svg">
           </section>
           <section>
-            <h1>TCP vs UDP</h1>
+            <h2>HTTP (TCP) vs UDP</h2>
           </section>
           <section>
             <pre><code data-trim>
@@ -112,19 +139,17 @@
               client.send(Buffer.from(`FILL ${colour}`), 8080, 192.168.0.12)
             </code></pre>
           </section>
-          <section>
-            <h6>[browser → server → MCU → fairy lights]</h6>
+          <section
+            data-background-size="contain"
+            data-background="images/graph-node.svg">
           </section>
         </section>
 
         <section>
-          <section>
-            <h1>Browser -> WS -> Server -> UDP -> MCU -> FAIRY LIGHTS</h1>
-          </section>
           <section class="left">
             <h1>Demo</h1>
             <pre><code data-trim>
-              &lt;input type="color" /&gt;
+              &lt;input type="color" oninput="broadcast()" /&gt;
             </code></pre>
           </section>
           <section>
@@ -134,9 +159,13 @@
 
         <section>
           <section>
-            <h2>Adding context:</h2>
+            <h1>Doing it Better-er</h1>
+          </section>
+          <section>
+            <h2>Addressable lights</h2>
             <h3>{A: [{n:0}, {n: 50}]}</h3>
           </section>
+
           <section class="left">
             <h5>Demo</h5>
             <h2>HTML &rarr; Fairy Lights</h2>
@@ -182,31 +211,82 @@
 
         <section>
           <section>
-            <h2>Adding (more) context:</h2>
+            <h1>Doing it Better-er</h1>
+          </section>
+          <section>
+            <h2>LED positions:</h2>
             <h3>{A: [{n:0, x: 0}, {n: 50, x: 1}]}</h3>
           </section>
           <section>
             <h3>WebGL</h3>
           </section>
+
+          <section
+            data-background-size="contain"
+            data-background="images/webgl.png">
+          </section>
+
+          <section
+            data-background-size="contain"
+            data-background="images/webgl-multi.png">
+          </section>
+
+          <section>
+            <h1>THREE.js</h1>
+            <pre><code data-trim>
+              const mesh = new THREE.SphereGeometry(size, 8, 8)
+              mesh.setPosition(5,4,3)
+
+              const material = new THREE.MeshBasicMaterial(
+                { color: Math.random() * 0xffffff }
+              )
+            </code></pre>
+          </section>
+
+          <section
+            data-background-size="contain"
+            data-background="images/graph-webgl-1.svg">
+          </section>
+
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>Ambient lights</h2>
+            <pre><code data-trim>
+              mesh.forEach((c, i) =>
+                c.material.setColor(
+                  i < mouse ? 0 : 0xffcc00
+                )
+              )
+            </code></pre>
+          </section>
+
           <section>
             <iframe data-lantern-src="/scripts/ambient.html" class="fullscreen"></iframe>
           </section>
 
-          <section>
-            <h3>[4d noise]</h3>
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>Spheres</h2>
           </section>
+
           <section>
             <h3>[bubbles]</h3>
           </section>
-        </section>
 
-        <section>
-          <section>
-            <h2>Adding input:</h2>
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>Input - Audio</h2>
           </section>
+
           <section>
             <h3>[demo audio]</h3>
           </section>
+
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>Input - Movement</h2>
+          </section>
+
           <section>
             <h3>[demo leap]</h3>
           </section>
@@ -214,31 +294,82 @@
 
         <section>
           <section>
-            <h1>Making use of our abstraction</h1>
+            <h1>Doing it Better-er</h1>
           </section>
-          <section>
-            <h1>[JS, WEBGL, WEBSOCKET]</h1>
+
+          <section
+            data-background-size="contain"
+            data-background="images/graph-webgl-1.svg">
           </section>
+
+          <section
+            data-background-size="contain"
+            data-background="images/graph-webgl-2.svg">
+          </section>
+
+          <section
+            data-background-size="contain"
+            data-background="images/webgl-3.png">
+          </section>
+
+
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>WebGL &rarr; LEDs</h2>
+          </section>
+
           <section>
             <h1>[10x10]</h1>
           </section>
+
+        </section>
+
+        <section>
           <section>
-            <h1>[10x10]</h1>
+            <h1>Goal-aligned abstraction</h1>
           </section>
+
+          <section class="left">
+            <h5>Demo</h5>
+            <h2>WebGL &rarr; LEDs &amp; Screens</h2>
+          </section>
+
+          <section>
+            <h1>[screen]</h1>
+          </section>
+
+          <section>
+            <h1>[todo: leap]</h1>
+          </section>
+        </section>
+
+        <section>
+          <h1>/demos</h1>
         </section>
 
 
         <section>
-          <section><h1>Abstractions</h1></section>
-          <section><h2>Moving from events to ideas</h2></section>
+          <section><h1>Abstraction</h1></section>
+          <section><h3>the quality of dealing with ideas rather than events.</h3></section>
           <section>
-            <h1>[us, them, events]</h1>
+            <h3>For geeks</h3>
+            <h2 class="fragment">Programming languages</h2>
+            <h2 class="fragment">User Interface</h2>
           </section>
+          <section
+            data-background-size="contain"
+            data-background="images/abstractions.png">
+          </section>
+          <section
+            data-background-size="contain"
+            data-background="images/abstractions-2.png">
+          </section>
+
         </section>
 
         <section>
           <section>
-            <h1>Intuitive interactions</h1>
+            <h1>Human interactions</h1>
           </section>
           <section>
             <h2>[sandpit]</h2>
@@ -249,7 +380,7 @@
             <p>Bring us into technology</p>
           </section>
           <section>
-            <h2>[?interactive coding]</h2>
+            <h2>[?dynamicland]</h2>
             <p>Exposing technology</p>
           </section>
           <section>
@@ -344,7 +475,7 @@
         margin: 0,
         history: true,
         controls: false,
-        transition: 'none',
+        transition: 'fade',
         progress: true,
         dependencies: [
           {
@@ -354,6 +485,13 @@
           }
         ]
       });
+
+      Reveal.addEventListener( 'slidechanged', () => {
+        document.body.style.cursor = 'none'
+      })
+      window.addEventListener('mousemove', () => {
+        document.body.style.cursor = ''
+      })
 
 
       const {width, height} = Reveal.getConfig()

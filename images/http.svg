@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1280px" height="720px" viewBox="0 0 1280 720" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #000000;">
+<svg width="1280px" height="720px" viewBox="0 0 1280 720" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
     <title>http</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-style="italic" font-size="18" font-family="AvenirNext-HeavyItalic, Avenir Next" font-weight="600">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-style="italic" font-size="18" font-family="AvenirNext-BoldItalic, Avenir Next" font-weight="bold">
         <g id="http" fill="#FFFFFF">
             <text id="Accept:text/html,app">
                 <tspan x="38" y="142">Accept:text/html,application/xhtml+xml,application/xml; \</tspan>
