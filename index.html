@@ -17,6 +17,10 @@
           <h3 class="badge">settings</h3>
           <form class="fullscreen" style="background: #444" id="settings">
             <label>
+              development
+              <input type="checkbox" name="development">
+            </label>
+            <label>
               lanterns
               <input type="url" name="lantern" placeholder="http://localhost:3000">
             </label>
@@ -169,15 +173,16 @@
             <pre><code data-trim>
               &lt;input type="color" oninput="broadcast()" /&gt;
             </code></pre>
+            <h1 class="fragment">✨WARNING✨</h1>
           </section>
           <section>
-            <input type="color" />
+            <iframe data-lantern-src="/scripts/input.html"></iframe>
           </section>
         </section>
 
         <section>
           <section>
-            <h1>Doing it Better-er</h1>
+            <h1>Adding context</h1>
           </section>
           <section>
             <h2>Addressable lights</h2>
@@ -202,12 +207,19 @@
           <section>
             <iframe class="fullscreen" data-lantern-src="/scripts/css.html"></iframe>
           </section>
+
+          <section>
+            <h2>An Abstraction</h2>
+          </section>
+          <section>
+            <h3>the quality of dealing with ideas rather than events.</h3>
+          </section>
         </section>
 
 
         <section>
           <section>
-            <h1>Doing it Better-er</h1>
+            <h1>Improving our abstraction</h1>
           </section>
           <section>
             <h2>LED positions:</h2>
@@ -246,11 +258,11 @@
 
           <section class="left">
             <h5>Demo</h5>
-            <h2>Ambient lights</h2>
+            <h2>4d noise</h2>
             <pre><code data-trim>
-              mesh.forEach((c, i) =>
-                c.material.setColor(
-                  i < mouse ? 0 : 0xffcc00
+              mesh.forEach(m =>
+                m.setColor(
+                  noise(m.x, m.y, m.z, time)
                 )
               )
             </code></pre>
@@ -262,11 +274,11 @@
 
           <section class="left">
             <h5>Demo</h5>
-            <h2>Spheres</h2>
+            <h2>Ripples</h2>
           </section>
 
           <section>
-            <h3>[bubbles]</h3>
+            <iframe data-lantern-src="/scripts/ripples.html" class="fullscreen"></iframe>
           </section>
 
           <section class="left">
@@ -275,7 +287,7 @@
           </section>
 
           <section>
-            <h3>[demo audio]</h3>
+            <iframe data-lantern-src="/scripts/webaudio.html" class="fullscreen"></iframe>
           </section>
 
           <section class="left">
@@ -284,13 +296,14 @@
           </section>
 
           <section>
-            <h3>[demo leap]</h3>
+            <iframe data-lantern-src="/scripts/leap.html" class="fullscreen"></iframe>
           </section>
         </section>
 
         <section>
+
           <section>
-            <h1>Doing it Better-er</h1>
+            <h1>Misaligned abstractions</h1>
           </section>
 
           <section
@@ -308,14 +321,25 @@
             data-background="images/webgl-3.png">
           </section>
 
-
           <section class="left">
             <h5>Demo</h5>
-            <h2>WebGL &rarr; LEDs</h2>
+            <h2>Vertex shaded LEDs</h2>
+            <pre><code data-trim>
+              precision mediump float;
+              varying vec3 vPosition;
+              uniform float t;
+
+              void main () {
+                float d = length(vPosition) * 5.0;
+
+                gl_FragColor = vec4(sin(d+t), cos(d-t), sin(t/2.0), 1.0);
+
+              }
+            </code>
           </section>
 
           <section>
-            <h1>[10x10]</h1>
+            <iframe data-lantern-src="/scripts/shader.html" class="fullscreen"></iframe>
           </section>
 
         </section>
@@ -336,7 +360,13 @@
           </section>
 
           <section>
-            <h1>[todo: leap]</h1>
+            <iframe data-lantern-src="/scripts/shader2.html" class="fullscreen"></iframe>
+          </section>
+
+
+
+          <section>
+            <iframe data-lantern-src="/scripts/shader-leap.html" class="fullscreen"></iframe>
           </section>
         </section>
 
@@ -345,7 +375,7 @@
         </section>
 
 
-        <section>
+        <!-- <section>
           <section><h1>Abstraction</h1></section>
           <section><h3>the quality of dealing with ideas rather than events.</h3></section>
           <section>
@@ -361,8 +391,7 @@
             data-background-size="contain"
             data-background="images/abstractions-2.png">
           </section>
-
-        </section>
+        </section> -->
 
         <section>
           <section>
@@ -372,36 +401,42 @@
             <h1>Fairy lights</h1>
             <!-- <h3>screens, </h3> -->
           </section>
+
+          <section>
+            <h2>Sometimes technology comes to us</h2>
+          </section>
           <section
             data-background-size="contain"
             data-background="images/sandpit.jpg">
           </section>
           <section>
-            <h2>Digital &rarr; Us</h2>
+            <h2>Sometimes we go to technology</h2>
           </section>
           <section
             data-background-size="contain"
             data-background="images/barbican.jpg">
           </section>
+          <section
+            data-background-size="contain"
+            data-background="images/barbican1.jpg">
+          </section>
           <section>
-            <h2>Us &rarr; Digital</h2>
+            <h2>Sometimes we coexist</h2>
           </section>
           <section
             data-background-size="contain"
             data-background="images/dynamicland.jpg">
           </section>
           <section>
-            <h3>Code &rarr; Us</h3>
+            <h2>Not just art hacks</h2>
           </section>
           <section
             data-background-size="contain"
             data-background="images/googlehome.png">
           </section>
-          <section>
-            <h1>Vive</h1>
-          </section>
-          <section>
-            <h2>Not just for art hacks</h2>
+          <section
+            data-background-size="contain"
+            data-background="images/vive.png">
           </section>
         </section>
 
@@ -415,8 +450,8 @@
             <h1>espruino</h1>
           </section>
           <section>
-            <h1>Light Hacking</h1>
-            <h3>@benjaminbenben</h3>
+            <h1>Light Hacking?</h1>
+            <h3 class="fragment">@benjaminbenben</h3>
           </section>
         </section>
 
@@ -440,6 +475,17 @@
 
       for(let input of qsa('#settings input[name]')) {
 
+        // urgh
+        if(input.type == 'checkbox') {
+           setttings[input.name] = input.checked = !!localStorage.getItem(`config:${input.name}`)
+           input.addEventListener('change', ({target}) => {
+             const v = target.checked;
+             settings[target.name] = !!v
+             localStorage.setItem(`config:${target.name}`, v ? 'on' :'')
+           })
+           continue
+        }
+
         setttings[input.name] = input.value = localStorage.getItem(`config:${input.name}`)
 
         input.addEventListener('change', ({target}) =>
@@ -461,10 +507,14 @@
 
         const layout = await res.json()
 
+        const {width, height} = Reveal.getConfig()
+
         const hash = btoa(JSON.stringify({
+          development: settings.development,
           layout,
-          development: true,
-          dark: true
+          width,
+          height,
+          dark: true,
         }))
 
         for(let {dataset} of qsa('[data-lantern-src]')  ) {
@@ -491,6 +541,7 @@
         controls: false,
         transition: 'fade',
         progress: true,
+        postMessage: true,
         dependencies: [
           {
             src: 'node_modules/reveal.js/plugin/highlight/highlight.js',

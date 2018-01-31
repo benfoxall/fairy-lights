@@ -144,6 +144,10 @@ input[type=text], input[type=url], input[type=number] {
   font-family: 'Avenir Next', sans-serif;
 }
 
+input[type=checkbox] {
+  zoom: 3;
+}
+
 
 #settings-error  {
   margin: 10vw 5vw;
