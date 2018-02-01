@@ -303,6 +303,16 @@
 
       requestAnimationFrame(render)
 
+        // FAKE LEAP THINGS
+    	window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / 5
+            const y = (-e.clientY / 5) + 100
+
+            gl.uniform3f(uPalm,
+              x, y, x + y
+            )
+    	})
+
 
       var controller = new Leap.Controller()
 			controller.connect()
