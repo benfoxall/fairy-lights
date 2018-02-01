@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script src="leap.min.js"></script>
+    <script src="OrbitControls.js"></script>
+		<script src="ReconnectingWebSocket.js"></script>
+		<script src="Lanterns.js"></script>
+    <script>
+		const layout = {
+			// "AA":
+				// [
+				// 	{x: 0}
+				// ]
+				//
+				// [
+				//   { "x": 0.000,  "y": 0.8, "z": 1 },
+				//   { "x": 0.383,  "y": 0.8, "z": 0.924 },
+				// 	{},{},{},{},{},{},{},{},{},{},{},{},
+				//   { "x": 0.707,  "y": 0.8, "z": 0.707 },
+				//   { "x": 0.924,  "y": 0.8, "z": 0.383 },
+				//   { "x": 1.000,  "y": 0.8, "z": 0 },
+				//   { "x": 0.924,  "y": 0.8, "z": -0.383 },
+				//   { "x": 0.707,  "y": 0.8, "z": -0.707 },
+				// 	{},{},{},{},{},{},{},{},{},{},{},{},
+				//   { "x": 0.383,  "y": 0.8, "z": -0.924 },
+				//   { "x": 0.000,  "y": 0.8, "z": -1 },
+				//   { "x": -0.383, "y": 0.8, "z": -0.924 },
+				//   { "x": -0.707, "y": 0.8, "z": -0.707 },
+				//   { "x": -0.924, "y": 0.8, "z": -0.383 },
+				//   { "x": -1.000, "y": 0.8, "z": 0 },
+				// 	{},{},{},{},{},{},{},{},{},{},{},{},
+				//   { "x": -0.924, "y": 0.8, "z": 0.383 },
+				//   { "x": -0.707, "y": 0.8, "z": 0.707 },
+				//   { "x": -0.383, "y": 0.8, "z": 0.924 }
+				// ],
+				"AA": Array(98).fill({}),
+				"STICK": Array(50).fill({}),
+				"JANE": Array(50).fill({})
+
+		}
+
+		layout.AA[0] = {x:-2, y:-1};
+		layout.AA[22] = {x:2, y:-1};
+		layout.AA[33] = {x:2, y:1};
+		layout.AA[52] = {x:-2, y:1};
+		layout.AA[56] = {x:-2, y:0.5};
+		layout.AA[73] = {x:1.5, y:0.5};
+		layout.AA[78] = {x:1.5, y:-0.5};
+		layout.AA[95] = {x:-2, y:-0.5};
+		layout.AA[98] = {x:-2, y:0.25};
+
+		// delete layout.AA
+
+		layout.STICK[0] = layout.STICK[49] = {x:3,y:2,z:0};
+		layout.STICK[25] = {z: 5};
+
+		layout.JANE[0] = {x:-3,y:0,z:0}
+		layout.JANE[49] = {x:3,y:0,z:0}
+
+		// layout.JANE[49] = {x:3.5,y:2,z:0};
+		// layout.JANE[25] = {z: 5};
+
+			const lanterns = new Lanterns(layout);
+			lanterns.connect()
+
+			var scene = new THREE.Scene()
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true })
+			renderer.setSize( window.innerWidth, window.innerHeight )
+			renderer.setPixelRatio(window.devicePixelRatio)
+      renderer.setClearColor(0xeeeeee)
+			document.body.appendChild( renderer.domElement )
+
+			// add lantern meshes to scene
+			const meshes = lanterns.asTHREE()
+			meshes.forEach(mesh => scene.add(mesh))
+
+			// initially colour the meshes
+			meshes.forEach((mesh, i) => {
+				// hue saturation, lightness
+				mesh.material.color.setHSL(0.17, 1, 0.5);
+				// mesh.material.color.setHSL(1/meshes.length * i, 1, 0.5);
+				// mesh.material.color.set((0xffffff/meshes.length) * i)
+			})
+			lanterns.writeTHREE(meshes)
+
+			camera.position.z = 10
+
+
+			const smooth = 15;
+
+			var controller = new Leap.Controller({enableGestures: true}),
+					velocity,
+					smoothVelocity,
+					sum,
+					previousColor,
+					color,
+					h,
+					s,
+					l,
+					speeds = Array(smooth).fill(0),
+					cycleColour = function() {
+						meshes.forEach((mesh, i) => {
+							mesh.material.color.offsetHSL(0.17, 0, 0);
+						});
+
+						lanterns.writeTHREE(meshes)
+					};
+
+			controller.loop(function(frame) {
+				if(frame.hands[0]) {
+					// console.log('doing things');
+					frame.gestures.forEach(function(gesture) {
+						switch(gesture.type) {
+							case "circle":
+								// no idea yet
+								break;
+							case "keyTap":
+								console.log(gesture);
+								animating = true;
+								// ripple out from the center
+								break;
+							case "screenTap":
+								console.log('screentap');
+								cycleColour();
+								// ripple cycle colour
+								break;
+							case "swipe":
+								// turn a page, cycle colour
+								break;
+						}
+					})
+
+				}
+			});
+
+			controller.on('frameEnd', function(timestamp){
+
+				renderer.render(scene, camera)
+//        console.log('frameEnd', timestamp);
+
+      });
+      controls = new THREE.OrbitControls( camera, renderer.domElement )
+			controls.enableZoom = false
+		</script>
+	</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="../three.min.js"></script>
+		<script src="../OrbitControls.js"></script>
+		<script src="../reconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+
+		<script>
+
+			window.addEventListener('keydown', e => {
+				let c;if(~['PageUp', 'p'].indexOf(e.key)) c = 'prev'; if(~['PageDown', 'n'].indexOf(e.key)) c = 'next'; if(c) { window.parent.postMessage( JSON.stringify({ method: c}), '*' ); window.parent.focus() }
+			})
+
+			const settings = function(h,w) {
+				try { return JSON.parse(atob(h.slice(1))) }
+				catch (e) { return w.parent }
+			}(document.location.hash, window)
+
+			// load configuration from runner
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+
+			var scene = new THREE.Scene()
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true })
+			renderer.setSize( window.innerWidth, window.innerHeight )
+			renderer.setPixelRatio(window.devicePixelRatio)
+			renderer.setClearColor(settings.dark? 0 : 0xeeeeee)
+			document.body.appendChild( renderer.domElement )
+
+
+			controls = new THREE.OrbitControls( camera, renderer.domElement )
+			controls.enableZoom = false
+			camera.position.z = 10
+
+
+			// add lantern meshes to scene
+			const meshes = lanterns.asTHREE()
+			meshes.forEach(mesh => scene.add(mesh))
+
+
+			/*  Ripples bit!  */
+			const ripplesDelay = 80 // the max frames between ripples
+			var rippleCountdown = 0 // the current frames until next ripple
+			const ripples = []
+
+			function addRipple(size) {
+	      var geometry = new THREE.SphereGeometry(size, 8, 8)
+	      var material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, transparent: true, opacity: 1, wireframe: true } )
+	      var rippleToAdd = new THREE.Mesh( geometry, material )
+
+				// This is crappy random position based on the assumption that the area is about 2 x 2 x 2
+
+				const r = ~~(Math.random() * meshes.length-1)
+				const {x, y, z} = meshes[r].position;
+				Object.assign(rippleToAdd.position, {x, y, z})
+
+				rippleToAdd.size = size
+				rippleToAdd.material.opacity = 1
+
+        ripples.push(rippleToAdd)
+
+
+				// comment out this line to see
+				// effect in action
+				scene.add(rippleToAdd)
+
+			}
+
+			var render = function () {
+			    // check if we should add another ripple
+			    if (rippleCountdown < 0) {
+				    rippleCountdown = ripplesDelay
+
+            addRipple(0.1)
+				}
+				rippleCountdown --
+
+				// loop over each ripple
+        ripples.forEach(function(ripple, index, object) {
+					var scale = ripple.scale.x
+
+					ripple.scale.x = ripple.scale.y = ripple.scale.z = scale * 1.025
+
+					var opacity = ripple.material.opacity - 0.007
+
+					ripple.material.opacity = opacity;//(1/(scale*scale*scale));
+
+					if (ripple.material.opacity < 0.01) {
+            scene.remove(ripple)
+            object.splice(index, 1);
+					}
+        });
+
+
+					const spheres = ripples.map(
+						ripple => new THREE.Sphere(ripple.position, ripple.scale.x * ripple.size)
+					)
+
+					// See what lanterns intersect with ripples and apply their colour
+					meshes.forEach(m => {
+						m.material.color.set(0,0,0)
+						spheres.forEach(function(sphere, index, object) {
+							const ripple = ripples[index];
+
+							if(sphere.containsPoint(m.position)) {
+
+								// const d = sphere.center.distanceTo(m.position) / sphere.radius;
+
+								m.material.color.lerp(
+									ripple.material.color,
+									Math.min(
+										1,
+										ripple.material.opacity * 2
+									)
+								)
+							}
+						})
+					})
+
+				requestAnimationFrame( render )
+				renderer.render(scene, camera)
+
+				lanterns.writeTHREECorrected(meshes)
+			}
+			render()
+
+		</script>
+	</body>
+</html>

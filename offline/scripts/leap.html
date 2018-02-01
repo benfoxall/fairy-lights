@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="../three.min.js"></script>
+		<script src="../OrbitControls.js"></script>
+		<script src="../ReconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+
+    <script src="../leap.min.js"></script>
+
+		<script>
+
+
+			window.addEventListener('keydown', e => {
+				let c;if(~['PageUp', 'p'].indexOf(e.key)) c = 'prev'; if(~['PageDown', 'n'].indexOf(e.key)) c = 'next'; if(c) { window.parent.postMessage( JSON.stringify({ method: c}), '*' ); window.parent.focus() }
+			})
+
+			const settings = function(h,w) {
+				try { return JSON.parse(atob(h.slice(1))) }
+				catch (e) { return w.parent }
+			}(document.location.hash, window)
+
+			// load configuration from runner
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+
+			var scene = new THREE.Scene()
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true })
+			renderer.setSize( window.innerWidth, window.innerHeight )
+			renderer.setPixelRatio(window.devicePixelRatio)
+			renderer.setClearColor(settings.dark ? 0 : 0xeeeeee)
+			document.body.appendChild( renderer.domElement )
+
+
+			controls = new THREE.OrbitControls( camera, renderer.domElement )
+			controls.enableZoom = false
+			camera.position.z = 10
+
+
+      const geometry = new THREE.SphereGeometry( 1, 10, 10 )
+      const material = new THREE.MeshBasicMaterial( { color: 0xffcc00, wireframe: true } )
+      const hand = new THREE.Mesh( geometry, material )
+			const hand_sphere = new THREE.Sphere(hand.position, 1)
+			scene.add(hand)
+
+			      // Object.assign(lantern.position, {x,y,z})
+
+
+
+
+			// add lantern meshes to scene
+			const meshes = lanterns.asTHREE()
+			meshes.forEach(mesh => scene.add(mesh))
+
+
+			// 100 -> 450 => 0 -> 3
+			// ((v - 100) /  350) * 3
+
+			function scale(a1,a2, b1, b2) {
+				return function(v) {
+					return (((v - a1) / (a2 - a1)) * (b2 - b1)) + b1
+				}
+			}
+
+			const x = scale(-200, 200, -4, 4)
+			const y = scale(100, 450, -4, 3)
+			const z = scale(-200, 200, -3, 9)
+
+
+			var controller = new Leap.Controller()
+			controller.connect()
+			controller.on('frame', frame => {
+				if(frame.hands.length) {
+					window.xx = frame
+					// console.log(frame)
+					// console.log(frame.hands[0].palmPosition)
+
+					const y2 = y(frame.hands[0].palmPosition[1])
+
+					console.log(frame.hands[0].palmPosition[2])
+
+
+					hand.position.x = x(frame.hands[0].palmPosition[0])
+					hand.position.y = y(frame.hands[0].palmPosition[1])
+					hand.position.z = z(frame.hands[0].palmPosition[2])
+
+
+
+					meshes.forEach(mesh => {
+
+						const distance = hand.position.distanceTo(mesh.position)
+
+						const r = 1
+
+						if(distance < r) {
+							mesh.material.color.setRGB(1 - (distance / r), 0.2, 1)
+						} else {
+							mesh.material.color.setRGB(0.1,0.2,0.05)
+						}
+
+					})
+
+					lanterns.writeTHREECorrected(meshes)
+				}
+
+			})
+
+			var render = function () {
+				requestAnimationFrame( render )
+				renderer.render(scene, camera)
+			}
+			render()
+
+		</script>
+	</body>
+</html>

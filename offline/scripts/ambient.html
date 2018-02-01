@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden}
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="../three.min.js"></script>
+		<script src="../OrbitControls.js"></script>
+		<script src="../ReconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+		<script src="../simplex-noise.js"></script>
+		<script>
+
+			const settings = function(h) {
+				try { return JSON.parse(atob(h.slice(1))) }
+				catch (e) { return window.parent }
+			}(document.location.hash)
+
+
+			// load configuration from runner
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+
+			var scene = new THREE.Scene()
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true })
+			renderer.setSize( window.innerWidth, window.innerHeight )
+			renderer.setPixelRatio(window.devicePixelRatio)
+			renderer.setClearColor(settings.dark ? 0 : 0xeeeeee)
+			document.body.appendChild( renderer.domElement )
+
+			// add lantern meshes to scene
+			const meshes = lanterns.asTHREE()
+			meshes.forEach(mesh => scene.add(mesh))
+
+
+			// initially colour the meshes
+			meshes.forEach((mesh, i) => {
+				mesh.material.color.set((0xffffff/meshes.length) * i)
+			})
+
+
+			const simplex = new SimplexNoise()
+
+			camera.position.z = 10
+
+			var render = function (t) {
+				requestAnimationFrame( render )
+
+				meshes.forEach((mesh, i) => {
+					const v = simplex.noise4D(mesh.position.x, mesh.position.y, mesh.position.z, t/10000)
+					// console.log(v)
+					mesh.material.color.setHSL((v+1)/2, 1, .6)
+				})
+
+				lanterns.writeTHREECorrected(meshes)
+
+				renderer.render(scene, camera)
+			}
+			requestAnimationFrame(render)
+
+      //
+			// var last_l = 0
+			// document.body.addEventListener('mousemove', (e) => {
+			// 	var l = Math.floor((e.clientY/400) * meshes.length)
+      //
+			// 	if(l !== last_l) {
+			// 		last_l = l
+      //
+			// 		meshes
+			// 			.forEach((lantern, i) => {
+			// 				if(l > i) {
+			// 					lantern.material.color.setHSL((i-l)/meshes.length,.750,.50)
+			// 				} else {
+			// 					lantern.material.color.set(0)
+			// 				}
+			// 			})
+      //
+			// 		lanterns.writeTHREE(meshes)
+      //
+			// 	}
+			// })
+
+			controls = new THREE.OrbitControls( camera, renderer.domElement )
+			controls.enableZoom = false
+		</script>
+	</body>
+</html>

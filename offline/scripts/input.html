@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden; }
+			canvas { width: 100%; height: 100% }
+
+			input {zoom: 2; position: absolute; left:50%; top:50%;transform: translate(-50%, -50%);}
+		</style>
+	</head>
+	<body>
+
+		<input type="color">
+
+		<script src="../ReconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+		<script>
+
+
+					window.addEventListener('keydown', e => {
+						let c;if(~['PageUp', 'p'].indexOf(e.key)) c = 'prev'; if(~['PageDown', 'n'].indexOf(e.key)) c = 'next'; if(c) { window.parent.postMessage( JSON.stringify({ method: c}), '*' ); window.parent.focus() }
+					})
+
+					const settings = function(h,w) {
+						try { return JSON.parse(atob(h.slice(1))) }
+						catch (e) { return w.parent }
+					}(document.location.hash, window)
+
+			// load configuration from runner
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+			console.log("SET", settings)
+
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+			const lights = lanterns.asArray()
+
+			const input = document.querySelector('input')
+
+			input.addEventListener('input', () => {
+				const c = parseInt(input.value.slice(1), 16)
+
+				const r = (c >> 16) & 0xff
+				const g = (c >> 8) & 0xff
+				const b = c & 0xff
+
+				console.log(r,g,b)
+
+				lights.forEach(l => Object.assign(l, {r, g, b}) )
+				lanterns.writeArray(lights)
+			})
+
+
+		</script>
+	</body>
+</html>

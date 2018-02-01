@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+    <script src="../ReconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+    <script src="../leap.min.js"></script>
+    <script>
+
+
+			window.addEventListener('keydown', e => {
+				let c;if(~['PageUp', 'p'].indexOf(e.key)) c = 'prev'; if(~['PageDown', 'n'].indexOf(e.key)) c = 'next'; if(c) { window.parent.postMessage( JSON.stringify({ method: c}), '*' ); window.parent.focus() }
+			})
+
+			const settings = function(h,w) {
+				try { return JSON.parse(atob(h.slice(1))) }
+				catch (e) { return w.parent }
+			}(document.location.hash, window)
+
+
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+			const lights = lanterns.asArray()
+
+      const sample_width = Math.ceil(Math.sqrt(lights.length))
+
+
+      // HOW MANY PIXELS WIDE FOR EACH LIGHT
+      const sample_stride = 5
+
+      // SCREEN HEIGHT (METERS)
+      const screen_height = 2.5
+
+
+      var canvas = document.createElement('canvas')
+      document.body.appendChild(canvas)
+
+      var ratio = window.devicePixelRatio || 1
+      canvas.width = settings.width || (window.innerWidth * ratio)
+      canvas.height = settings.height || (window.innerHeight * ratio)
+      canvas.style.width = '100%'
+
+
+      // a triangle for each light + 1 for the screen
+      const vertices = new Float32Array(
+        ( lights.length + 1 ) * (2 + 3) * 3
+      )
+
+      let idx = 0
+
+      // how many units up / across
+      const scaleY = canvas.height / sample_stride
+      const scaleX = canvas.width / sample_stride
+      const screenR = scaleX / scaleY
+
+      const screen_w = screen_height * screenR
+      const screen_w_off = -screen_w/2
+
+      // screen
+      vertices[idx++] = 0
+      vertices[idx++] = 0
+      // real
+      vertices[idx++] = 0 + screen_w_off
+      vertices[idx++] = 0
+      vertices[idx++] = 0
+
+      // screen
+      vertices[idx++] = scaleX * 2
+      vertices[idx++] = 0
+      // real
+      vertices[idx++] = (screen_w * 2) + screen_w_off
+      vertices[idx++] = 0
+      vertices[idx++] = 0
+
+      //screen
+      vertices[idx++] = 0
+      vertices[idx++] = scaleY * 2
+      // real
+      vertices[idx++] = screen_w_off
+      vertices[idx++] = screen_height * 2
+      vertices[idx++] = 0
+
+
+      lights.forEach((l, i) => {
+        const sx = (i % sample_width)
+        const sy = (~~(i / sample_width))
+        const rx = l.x
+        const ry = l.y
+        const rz = l.z
+
+        vertices[idx++] = sx
+        vertices[idx++] = sy
+        vertices[idx++] = rx
+        vertices[idx++] = ry
+        vertices[idx++] = rz
+
+        vertices[idx++] = sx + 2
+        vertices[idx++] = sy
+        vertices[idx++] = rx
+        vertices[idx++] = ry
+        vertices[idx++] = rz
+
+
+        vertices[idx++] = sx
+        vertices[idx++] = sy + 2
+        vertices[idx++] = rx
+        vertices[idx++] = ry
+        vertices[idx++] = rz
+
+      })
+
+
+
+      // pixel capture
+      const readPixels = (() => {
+
+        const size = sample_width * sample_stride
+        const pixels = new Uint8Array(size * size * 4);
+        const colours = lights.map(() => ({r:0, g:0, b:0}))
+
+        return gl => {
+
+          if(lanterns._blocked()) return
+
+          gl.readPixels(
+            0, 0,
+            size, size,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            pixels
+          );
+
+          colours.forEach((c, i) => {
+            const x = i % sample_width
+            const y = Math.floor( i  / sample_width )
+
+            const xoff = x * sample_stride;
+            const yoff = y * sample_stride * sample_width * sample_stride;
+
+            const idx = (xoff + yoff) * 4
+
+            c.r = pixels[idx]
+            c.g = pixels[idx + 1]
+            c.b = pixels[idx + 2]
+          })
+
+          // a bit of colour normalisation for the lights
+          colours.forEach(c => {
+            c.r = (c.r/255) * (c.r/255) * (c.r/255) * 255
+            c.g = (c.g/255) * (c.g/255) * (c.g/255) * 255
+            c.b = (c.b/255) * (c.b/255) * (c.b/255) * 255
+          })
+
+
+          lanterns.writeArray(colours)
+
+        }
+
+      })()
+
+
+
+
+
+      var gl = canvas.getContext("webgl") ||
+               canvas.getContext("experimental-webgl")
+
+      if (!gl) throw new Error("WebGL unavailable")
+
+
+      // shader compiler
+      function compile(gl, type, source) {
+
+        var shader = gl.createShader(type)
+        gl.shaderSource(shader, source)
+        gl.compileShader(shader)
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+          throw new Error(gl.getShaderInfoLog(shader))
+
+        return shader
+      }
+
+      var vertexShader = compile(gl, gl.VERTEX_SHADER, `
+        uniform vec2 uScreen;
+        attribute vec2 aPosition;
+        attribute vec3 aRealPosition;
+
+        varying vec3 vPosition;
+
+        void main () {
+          float sx =  ${sample_stride.toFixed(1)} / (uScreen.x / 2.0);
+          float sy =  ${sample_stride.toFixed(1)} / (uScreen.y / 2.0);
+
+          vPosition = aRealPosition;
+
+          gl_Position = vec4(
+            (aPosition.x * sx) - 1.0,
+            (aPosition.y * sy) - 1.0,
+            0, 1.0);
+        }`)
+
+      var fragmentShader = compile(gl, gl.FRAGMENT_SHADER, `
+        precision mediump float;
+        varying vec3 vPosition;
+        uniform float t;
+        uniform vec3 uPalm;
+
+        void main () {
+          float d = length(vPosition) * 3.0;
+          float _t = t / 2.0;
+
+          vec3 p = vPosition * 5.0;
+
+          gl_FragColor = vec4(
+            sin(p.x + (uPalm.x/30.0)),
+            sin(p.y + (uPalm.y/30.0)),
+            sin(p.z + (uPalm.z/30.0)),
+            1.0
+          );
+
+
+          float dd = length(vPosition - uPalm/90.0) * 3.0;
+
+          gl_FragColor = vec4(
+            sin(dd - (uPalm.x/30.0)),
+            sin(dd + (uPalm.y/30.0)),
+            sin(dd - (uPalm.z/30.0)),
+            1.0
+          );
+
+        }`
+      )
+
+      var program = gl.createProgram()
+      gl.attachShader(program, vertexShader)
+      gl.attachShader(program, fragmentShader)
+      gl.linkProgram(program)
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        throw new Error(gl.getProgramInfoLog(program))
+      }
+
+      gl.useProgram(program)
+
+      var aPosition = gl.getAttribLocation(program, 'aPosition')
+      var aRealPosition = gl.getAttribLocation(program, 'aRealPosition')
+      var aColour = gl.getAttribLocation(program, 'aColour')
+      var uFragColor = gl.getUniformLocation(program, 'uFragColor')
+      var uScreen = gl.getUniformLocation(program, 'uScreen')
+      var uT = gl.getUniformLocation(program, 't')
+      var uPalm = gl.getUniformLocation(program, 'uPalm')
+
+      gl.uniform4f(uFragColor, 0, .5, 1, .7)
+      gl.uniform4f(uFragColor, 0, 0, 1, 1)
+      gl.uniform2f(uScreen, canvas.width, canvas.height)
+
+
+      var buffer = gl.createBuffer()
+      if (!buffer) throw new Error('Failed to create buffer.')
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+
+      gl.vertexAttribPointer(
+        aPosition,
+        2,
+        gl.FLOAT,
+        gl.FALSE,
+        Float32Array.BYTES_PER_ELEMENT * 5,
+        0)
+      gl.enableVertexAttribArray(aPosition)
+
+
+      gl.vertexAttribPointer(
+        aRealPosition,
+        3,
+        gl.FLOAT,
+        gl.FALSE,
+        Float32Array.BYTES_PER_ELEMENT * 5,
+        Float32Array.BYTES_PER_ELEMENT * 2)
+      gl.enableVertexAttribArray(aRealPosition)
+
+
+      const render = (t) => {
+        requestAnimationFrame(render)
+        gl.uniform1f(uT, t/1000)
+        gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 5)
+
+        readPixels(gl)
+      }
+
+      requestAnimationFrame(render)
+
+
+      var controller = new Leap.Controller()
+			controller.connect()
+			controller.on('frame', frame => {
+				if(frame.hands.length) {
+          gl.uniform3f(uPalm,
+            frame.hands[0].palmPosition[0],
+            frame.hands[0].palmPosition[1],
+            frame.hands[0].palmPosition[2]
+          )
+					// window.xx = frame
+					// console.log(frame)
+					// console.log(frame.hands[0].palmPosition)
+
+					// const y2 = y(frame.hands[0].palmPosition[1])
+
+					// console.log(frame.hands[0].palmPosition[2])
+
+
+					// hand.position.x = x(frame.hands[0].palmPosition[0])
+					// hand.position.y = y(frame.hands[0].palmPosition[1])
+					// hand.position.z = z(frame.hands[0].palmPosition[2])
+        }
+
+
+      })
+
+
+    </script>
+  </body>
+</html>

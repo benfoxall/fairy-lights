@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Lanterns frontend</title>
+		<style>
+			body { margin: 0; overflow:hidden; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="../three.min.js"></script>
+		<script src="../OrbitControls.js"></script>
+		<script src="../chroma.js"></script>
+
+		<script src="../ReconnectingWebSocket.js"></script>
+		<script src="../Lanterns.js"></script>
+		<script>
+
+			window.addEventListener('keydown', e => {
+				let c;if(~['PageUp', 'p'].indexOf(e.key)) c = 'prev'; if(~['PageDown', 'n'].indexOf(e.key)) c = 'next'; if(c) { window.parent.postMessage( JSON.stringify({ method: c}), '*' ); window.parent.focus() }
+			})
+
+			const settings = function(h,w) {
+				try { return JSON.parse(atob(h.slice(1))) }
+				catch (e) { return w.parent }
+			}(document.location.hash, window)
+
+			// load configuration from runner
+			const layout = settings.layout
+			const broadcast = !settings.development
+
+
+			const lanterns = new Lanterns(layout)
+
+			if(broadcast) lanterns.connect()
+
+
+			var scene = new THREE.Scene()
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
+
+			var renderer = new THREE.WebGLRenderer({ antialias: true })
+			renderer.setSize( window.innerWidth, window.innerHeight )
+			renderer.setPixelRatio(window.devicePixelRatio)
+			renderer.setClearColor(settings.dark ? 0 : 0xeeeeee)
+			document.body.appendChild( renderer.domElement )
+
+			// add lantern meshes to scene
+			const meshes = lanterns.asTHREE()
+			meshes.forEach(mesh => scene.add(mesh))
+
+
+			// initially colour the meshes
+			meshes.forEach((mesh, i) => {
+				mesh.material.color.set((0xffffff/meshes.length) * i)
+			})
+			lanterns.writeTHREE(meshes)
+
+			camera.position.z = 10
+
+			controls = new THREE.OrbitControls( camera, renderer.domElement )
+			controls.enableZoom = false
+
+
+			var audioCtx = new AudioContext()
+			var analyser = audioCtx.createAnalyser()
+
+
+			analyser.fftSize = 512
+			// var bufferLength = analyser.frequencyBinCount
+			// var dataArray = new Uint8Array(bufferLength)
+			// analyser.getByteTimeDomainData(dataArray)
+
+
+			analyser.smoothingTimeConstant = 0.97
+			var bufferLength = analyser.frequencyBinCount
+			var dataArray = new Uint8Array(bufferLength)
+			analyser.getByteFrequencyData(dataArray)
+
+
+			// const canvas = document.createElement('canvas')
+			// canvas.width = bufferLength
+			// canvas.height = 300
+			// Object.assign(canvas.style, {background:'#08f', zIndex: 100000, border: '2px solid blue', height: '200px'})
+      //
+			// const ctx = canvas.getContext('2d')
+      //
+			// document.body.appendChild(canvas)
+
+			const colour = chroma.scale(['#000', '#0f0', 'blue', 'red', '#fff'])
+
+
+
+			let max = 0
+			meshes.forEach(mesh => {
+				max = Math.max(max, mesh.position.distanceTo({x:0, y:2, z:0}))
+				// console.log(mesh.position.distanceTo({x:0, y:2, z:0}))
+			})
+
+			max *= 1.001
+
+			var render = function () {
+				requestAnimationFrame( render )
+
+				// analyser.getByteTimeDomainData(dataArray)
+				analyser.getByteFrequencyData(dataArray)
+
+				// ctx.clearRect(0,0,canvas.width, canvas.height)
+				// for (var i = 0; i < dataArray.length; i++) {
+				// 	// ctx.fillStyle = `hsl(${~~(dataArray[i] * 360/255)}, 50%, 50%)`
+				// 	ctx.fillStyle = colour(dataArray[i]/255)
+				// 	// ctx.fillRect(i, 0, 1, 300)
+				// 	ctx.fillRect(i, 0, 1, dataArray[i])
+        //
+				// }
+
+				meshes.forEach(mesh => {
+					const d = mesh.position.distanceTo({x:0, y:2, z:0})
+					const idx = Math.floor((d/max) * dataArray.length)
+					const value = dataArray[idx]
+					const c = colour(value/155)._rgb
+
+					mesh.material.color.setRGB(c[0]/255,c[1]/255,c[2]/255)
+					lanterns.writeTHREE(meshes)
+					//
+				})
+
+
+				renderer.render(scene, camera)
+			}
+			render()
+
+
+
+
+
+
+
+			navigator.mediaDevices.getUserMedia({video: false, audio: true})
+			.then(function(stream) {
+
+				var source = audioCtx.createMediaStreamSource(stream);
+				source.connect(analyser)
+
+				console.log("GOT STREAM")
+				console.log(stream, src)
+			  /* use the stream */
+			}).catch(function(err) {
+			  /* handle the error */
+			});
+
+		</script>
+	</body>
+</html>

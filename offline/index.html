@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Runner</title>
+    <style media="screen">
+      body {
+        font-family: sans-serif;
+        margin: 0;
+      }
+      form {
+        display: flex;
+        font-weight: 800;
+        padding: .75em;
+        border-bottom: 1px solid #ccc;
+      }
+      form label {
+        flex: auto
+      }
+      form em {
+        font-size: 0.5em;
+        display: block;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      iframe {
+        flex-grow: 1;
+        border: none;
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label>
+        script
+        <select name="script">
+          <option value="">--</option>
+          <option value="form.html">form</option>
+          <option value="input.html">input</option>
+          <option value="css.html">css</option>
+          <option value="first.html">mouse</option>
+          <option value="ambient.html">ambient</option>
+          <option value="ripples.html">ripples</option>
+          <option value="webaudio.html">web audio</option>
+          <option value="leap.html">leap motion</option>
+          <option value="shader.html">shader</option>
+          <option value="shader2.html">shader2</option>
+          <option value="shader-leap.html">shader-leap</option>
+          <option value="layout-debug.html">debug</option>
+
+        </select>
+      </label>
+
+      <label>
+        layout
+        <select name="layout">
+          <option value="">--</option>
+          <option value="hackspace-1.json">hackspace 1</option>
+          <option value="16-ring.json">neopixel 16</option>
+          <option value="ben.json">bens house</option>
+          <option value="RDGN.json">RDGN</option>
+        </select>
+      </label>
+
+      <label>
+        development
+        <input type="checkbox" checked name="development"/>
+        <em>prevent broadcast to lights</em>
+      </label>
+    </form>
+
+    <iframe src="about:blank" id="main"></iframe>
+
+    <script type="text/javascript">
+      const qsa = document.querySelectorAll.bind(document)
+      const qs = document.querySelector.bind(document)
+
+      const storage = sessionStorage
+
+      // persist values on load
+      Array.from(qsa('select'))
+        .forEach( input => {
+          const store_key = `select-${input.name}`
+
+          const initial = storage.getItem(store_key)
+          if(initial !== null) input.value = initial
+
+          input.addEventListener('change', () => {
+            storage.setItem(store_key, input.value)
+          }, false)
+        })
+
+      Array.from(qsa('[type=checkbox]'))
+        .forEach( input => {
+          const store_key = `checkbox-${input.name}`
+
+          const initial = storage.getItem(store_key)
+          if(initial !== null) input.checked = initial == 'true'
+
+          input.addEventListener('change', () => {
+            storage.setItem(store_key, input.checked)
+          }, false)
+        })
+
+      function run() {
+        const data = new FormData(qs('form'))
+
+        const script = data.get('script')
+        const layout = data.get('layout')
+
+        window.development = data.get('development') == 'on'
+
+        if(script && layout) {
+          fetch(`layouts/${layout}`)
+            .then(response => response.json())
+            .then(json => window.layout = json)
+            .then(() => qs('#main').src = `scripts/${script}?${Math.random()}`)
+            .catch(e => {
+              qs('#main').src = `data:text/html,<h3 style="font-family:sans-serif;color:#08f">Couldn't load <br/>${e}`
+            })
+
+        } else {
+          qs('#main').src = 'about:blank'
+        }
+      }
+
+
+      Array.from(qsa('input, select'))
+        .forEach(input => {
+          input.addEventListener('change', () => {
+            run()
+          })
+        })
+
+
+    run()
+
+
+    //hide the menu if we're fullscreen
+    if(window.innerHeight == screen.height)
+      qs('form').style.display = 'none'
+
+
+    </script>
+
+  </body>
+</html>
