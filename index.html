@@ -13,6 +13,9 @@
   <body>
     <div class="reveal">
       <div class="slides">
+        <script>
+          window.NON_INTERACTIVE = true
+        </script>
         <section id="setup">
           <h3 class="badge">settings</h3>
           <form class="fullscreen" style="background: #444" id="settings">
@@ -489,33 +492,53 @@
 
       const settings = window.setttings = {}
 
-      for(let input of qsa('#settings input[name]')) {
+      if(window.NON_INTERACTIVE) {
+        Object.assign(settings, {
+          "development": true,
+          "lantern": "",
+          "layout": "test.json",
+          "width": "4.11",
+          "height": "3"
+        })
 
-        // urgh
-        if(input.type == 'checkbox') {
-           setttings[input.name] = input.checked = !!localStorage.getItem(`config:${input.name}`)
-           input.addEventListener('change', ({target}) => {
-             const v = target.checked;
-             settings[target.name] = !!v
-             localStorage.setItem(`config:${target.name}`, v ? 'on' :'')
-           })
-           continue
-        }
+        qs('#setup').remove()
+      } else {
 
-        setttings[input.name] = input.value = localStorage.getItem(`config:${input.name}`)
+        for(let input of qsa('#settings input[name]')) {
 
-        input.addEventListener('change', ({target}) =>
-          localStorage.setItem(
-            `config:${target.name}`,
-            setttings[target.name] = target.value
+          // urgh
+          if(input.type == 'checkbox') {
+             setttings[input.name] = input.checked = !!localStorage.getItem(`config:${input.name}`)
+             input.addEventListener('change', ({target}) => {
+               const v = target.checked;
+               settings[target.name] = !!v
+               localStorage.setItem(`config:${target.name}`, v ? 'on' :'')
+             })
+             continue
+          }
+
+          setttings[input.name] = input.value = localStorage.getItem(`config:${input.name}`)
+
+          input.addEventListener('change', ({target}) =>
+            localStorage.setItem(
+              `config:${target.name}`,
+              setttings[target.name] = target.value
+            )
           )
-        )
+        }
       }
+
 
       const setsrcs = async () => {
         const a = document.createElement('a')
         a.href = settings.lantern
-        const { origin } = a
+        let { origin } = a
+
+        if(!settings.lantern) {
+          origin = 'offline'
+        }
+
+
 
         const res = await fetch(settings.layout)
 
@@ -538,11 +561,19 @@
         }
       }
 
+      const status = text => {
+        if(qs('#settings-error')) {
+          qs('#settings-error').textContent = text
+        } else {
+          console.log("STATUS: ", text)
+        }
+      }
+
       const updatesrcs = () =>
         setsrcs()
           .then(
-            () => qs('#settings-error').textContent = '🌈',
-            e  => qs('#settings-error').textContent = e
+            () => status('🌈'),
+            e  => status(e)
           )
 
       for(let input of qsa('input[name=lantern], input[name=layout]')) {
@@ -554,7 +585,7 @@
       Reveal.initialize({
         margin: 0,
         history: true,
-        controls: false,
+        controls: true,
         transition: 'fade',
         progress: true,
         postMessage: true,
@@ -587,14 +618,17 @@
       // (some projectors are weird)
       const sw = qs('#settings input[name=width]')
       const sh = qs('#settings input[name=height]')
-      const setw = () => sw.placeholder = parseFloat(sh.value) * (width/height)
-      const seth = () => sh.placeholder = parseFloat(sw.value) / (width/height)
 
-      sh.addEventListener('input', setw)
-      sw.addEventListener('input', seth)
+      if(sw && sh) {
+        const setw = () => sw.placeholder = parseFloat(sh.value) * (width/height)
+        const seth = () => sh.placeholder = parseFloat(sw.value) / (width/height)
 
-      if(sh.value) setw()
-      if(sw.value) seth()
+        sh.addEventListener('input', setw)
+        sw.addEventListener('input', seth)
+
+        if(sh.value) setw()
+        if(sw.value) seth()
+      }
 
     </script>
   </body>

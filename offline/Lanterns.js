@@ -135,7 +135,7 @@ class Lanterns {
 
     for (var i = 0; i < meshes.length; i++) {
       const {r,g,b} = meshes[i].material.color;
-      
+
       this._data[i*3]     = r * r * r * 255
       this._data[i*3 + 1] = g * g * g * 255
       this._data[i*3 + 2] = b * b * b * 255
@@ -155,6 +155,8 @@ class Lanterns {
   // untestedish
 
   connect(host = location.host) {
+    throw new Error("OFFLINE VERSION.  see https://github.com/adventure-collective/lanterns")
+
     if(this._socket) return console.error("Already connected")
 
     const socket = this._socket = new ReconnectingWebSocket(`ws://${host}`)
