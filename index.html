@@ -1,205 +1,195 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <title>FAIRY LIGHTS</title>
-    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
-    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
-    <link rel="stylesheet" href="css/syntax.css">
-    <link rel="stylesheet" href="css/main.css">
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <script>
-          window.NON_INTERACTIVE = true
-        </script>
-        <section id="setup">
-          <h3 class="badge">settings</h3>
-          <form class="fullscreen" style="background: #444" id="settings">
-            <label>
-              development
-              <input type="checkbox" name="development">
-            </label>
-            <label>
-              lanterns
-              <input type="url" name="lantern" placeholder="http://localhost:3000">
-            </label>
-            <label>
-              layout
-              <input type="url" name="layout" placeholder="http://foo.json">
-            </label>
-            <label>
-              width
-              <input type="number" name="width">
-            </label>
-            <label>
-              height
-              <input type="number" name="height">
-            </label>
-            <p id="settings-error"></p>
-          </form>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <title>FAIRY LIGHTS</title>
+  <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <script>
+        window.NON_INTERACTIVE = true
+      </script>
+      <section id="setup">
+        <h3 class="badge">settings</h3>
+        <form class="fullscreen" style="background: #444" id="settings">
+          <label>
+            development
+            <input type="checkbox" name="development">
+          </label>
+          <label>
+            lanterns
+            <input type="url" name="lantern" placeholder="http://localhost:3000">
+          </label>
+          <label>
+            layout
+            <input type="url" name="layout" placeholder="http://foo.json">
+          </label>
+          <label>
+            width
+            <input type="number" name="width">
+          </label>
+          <label>
+            height
+            <input type="number" name="height">
+          </label>
+          <p id="settings-error"></p>
+        </form>
+      </section>
+      <section>
+        <section>
+          <h1>I'm Ben</h1>
         </section>
         <section>
-          <section><h1>I'm Ben</h1></section>
-          <section><h2>I sometimes give talks</h2></section>
-          <!-- <section><h3>Barcelona, Boston, Berlin, Brighton, Milton Keynes, San&nbsp;Francisco, Singapore, Toronto …</h3></section> -->
-          <section><h4>Full Stack Fest, Full Stack London, Fluent CA, Breaking Borders, Render, A Day of REST, Mega Meetup, Frontier Conference, SimpleWeb Hack, Marlow[dev], CSV Conference, JSMonthly London, Render, AsyncJS, Reasons.to, UpFrontConf, jQueryUK, Breaking Borders, ffconf, All Your Base Conference, MK Geek Night, Talk Web Design, FutureJS, London JS Conf, MKGN, JSOxford, jQuery UK</h4></section>
-          <section><h3>VR, serverless, phantomjs, css, service workers, indexedDB, web audio, graphics, visualisation, realtime, data, running, d3, webrtc, websockets, MQTT, IoT, emoji, ASTs, micro-hacks, array buffers, positioning, the web platform, the web, queen victoria, hardware…</h3></section>
-          <section>
-            <h2>pipe-share</h2>
-            <h1 class="fragment">OGN#20</h1>
-          </section>
-          <section>
-              <h1 class="fragment strike">1 minute</h1>
-              <h1 class="fragment">20 seconds</h1>
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/JP.jpg">
-            <footer>
-              <a href="https://www.flickr.com/photos/garrettc/3388960135/in/photolist-6afbn7-6axE67-6atiMa-c13WZ3/">Photo: Garrett Coakley</a>
-            </footer>
-          </section>
-          <section>
-            <h2>JP helped people be proud of the things they do</h2>
-          </section>
-          <section>
+          <h2>I sometimes give talks</h2>
+        </section>
+        <!-- <section><h3>Barcelona, Boston, Berlin, Brighton, Milton Keynes, San&nbsp;Francisco, Singapore, Toronto …</h3></section> -->
+        <section>
+          <h4>Full Stack Fest, Full Stack London, Fluent CA, Breaking Borders, Render, A Day of REST, Mega Meetup, Frontier Conference,
+            SimpleWeb Hack, Marlow[dev], CSV Conference, JSMonthly London, Render, AsyncJS, Reasons.to, UpFrontConf, jQueryUK,
+            Breaking Borders, ffconf, All Your Base Conference, MK Geek Night, Talk Web Design, FutureJS, London JS Conf,
+            MKGN, JSOxford, jQuery UK</h4>
+        </section>
+        <section>
+          <h3>VR, serverless, phantomjs, css, service workers, indexedDB, web audio, graphics, visualisation, realtime, data,
+            running, d3, webrtc, websockets, MQTT, IoT, emoji, ASTs, micro-hacks, array buffers, positioning, the web platform,
+            the web, queen victoria, hardware…</h3>
+        </section>
+        <section>
+          <h2>pipe-share</h2>
+          <h1 class="fragment">OGN#20</h1>
+        </section>
+        <section>
+          <h1 class="fragment strike">1 minute</h1>
+          <h1 class="fragment">20 seconds</h1>
+        </section>
+        <section data-background-size="contain" data-background="images/JP.jpg">
+          <footer>
+            <a href="https://www.flickr.com/photos/garrettc/3388960135/in/photolist-6afbn7-6axE67-6atiMa-c13WZ3/">Photo:
+              Garrett Coakley</a>
+          </footer>
+        </section>
+        <section>
+          <h2>JP helped people be proud of the things they do</h2>
+        </section>
+        <section>
 
-          </section>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><span class="fragment">LED</span> Fairy Lights</h1>
+        </section>
+        <section data-background-size="contain" data-background="images/LED.svg">
         </section>
 
-        <section>
-          <section>
-            <h1><span class="fragment">LED</span> Fairy Lights</h1>
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/LED.svg">
-          </section>
-
-          <section
-            data-background-size="contain"
-            data-background="images/led-graph.png">
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/pwm.svg">
-            <!-- <h1>[PWM]</h1> -->
-          </section>
-
-          <section
-            data-background-size="cover"
-            data-background="images/pico.jpg">
-            <!-- <h1>[espriuno]</h1> -->
-          </section>
-
-          <section
-            data-background-size="contain"
-            data-background="images/rgbled.jpg">
-            <!-- <h1>[tricolor LED]</h1> -->
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/ws2811.svg">
-            <!-- <h1>[WS2811]</h1> -->
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/ws2811s.svg">
-            <!-- <h1>[WS2811s]</h1> -->
-          </section>
-          <section>
-            <h1>ws2811</h1>
-            <h1>ws2812</h1>
-            <h1>ws2812b</h1>
-            <h1>neopixels</h1>
-          </section>
-          <section>
-            <h1>Communicating with our LEDs</h1>
-          </section>
-          <section data-background="images/nodemcu.jpg">
-            <footer>
-              <a href="https://commons.wikimedia.org/w/index.php?curid=39477865">
-                source: wikipedia.org/wiki/NodeMCU (Vowstar)
-              </a>
-            </footer>
-          </section>
+        <section data-background-size="contain" data-background="images/led-graph.png">
+        </section>
+        <section data-background-size="contain" data-background="images/pwm.svg">
+          <!-- <h1>[PWM]</h1> -->
         </section>
 
+        <section data-background-size="cover" data-background="images/pico.jpg">
+          <!-- <h1>[espriuno]</h1> -->
+        </section>
+
+        <section data-background-size="contain" data-background="images/rgbled.jpg">
+          <!-- <h1>[tricolor LED]</h1> -->
+        </section>
+        <section data-background-size="contain" data-background="images/ws2811.svg">
+          <!-- <h1>[WS2811]</h1> -->
+        </section>
+        <section data-background-size="contain" data-background="images/ws2811s.svg">
+          <!-- <h1>[WS2811s]</h1> -->
+        </section>
         <section>
-          <section
-            data-background-size="contain"
-            data-background="images/graph-basic.svg">
-          </section>
-          <section>
-            <pre><code data-trim>
+          <h1>ws2811</h1>
+          <h1>ws2812</h1>
+          <h1>ws2812b</h1>
+          <h1>neopixels</h1>
+        </section>
+        <section>
+          <h1>Communicating with our LEDs</h1>
+        </section>
+        <section data-background="images/nodemcu.jpg">
+          <footer>
+            <a href="https://commons.wikimedia.org/w/index.php?curid=39477865">
+              source: wikipedia.org/wiki/NodeMCU (Vowstar)
+            </a>
+          </footer>
+        </section>
+      </section>
+
+      <section>
+        <section data-background-size="contain" data-background="images/graph-basic.svg">
+        </section>
+        <section>
+          <pre><code data-trim>
             &lt;form action="http://192.168.0.12" method="POST" &gt;
               &lt;input name="color" type="color"&gt;
               &lt;input type="submit"&gt;
             &lt;/form&gt;
             </code></pre>
-          </section>
-          <section>
-            <h1>It works!</h1>
-            <iframe data-lantern-src="/scripts/form.html"></iframe>
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/http.svg">
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/http-annotated-1.svg">
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/http-annotated-2.svg">
-          </section>
-          <section>
-            <h2>HTTP (TCP) vs UDP</h2>
-          </section>
-          <section>
-            <pre><code data-trim>
+        </section>
+        <section>
+          <h1>It works!</h1>
+          <iframe data-lantern-src="/scripts/form.html"></iframe>
+        </section>
+        <section data-background-size="contain" data-background="images/http.svg">
+        </section>
+        <section data-background-size="contain" data-background="images/http-annotated-1.svg">
+        </section>
+        <section data-background-size="contain" data-background="images/http-annotated-2.svg">
+        </section>
+        <section>
+          <h2>HTTP (TCP) vs UDP</h2>
+        </section>
+        <section>
+          <pre><code data-trim>
               const dgram = require('dgram')
               const client = dgram.createSocket('udp4')
               const colour = String.fromCharCode(255, 150, 0)
               client.send(Buffer.from(`FILL ${colour}`), 8080, 192.168.0.12)
             </code></pre>
-          </section>
-          <section
-            data-background-size="contain"
-            data-background="images/graph-node.svg">
-          </section>
         </section>
+        <section data-background-size="contain" data-background="images/graph-node.svg">
+        </section>
+      </section>
 
-        <section>
-          <section class="left">
-            <h1>Demo</h1>
-            <pre><code data-trim>
+      <section>
+        <section class="left">
+          <h1>Demo</h1>
+          <pre><code data-trim>
               &lt;input type="color" oninput="broadcast()" /&gt;
             </code></pre>
-            <h1 class="fragment"><small>✨</small>WARNING<small>✨</small></h1>
-          </section>
-          <section>
-            <iframe data-lantern-src="/scripts/input.html"></iframe>
-          </section>
+          <h1 class="fragment"><small>✨</small>WARNING<small>✨</small></h1>
+        </section>
+        <section>
+          <iframe data-lantern-src="/scripts/input.html"></iframe>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Addressable lights</h1>
+        </section>
+        <section>
+          <h3>{A: [{n:0}, {n: 50}]}</h3>
         </section>
 
-        <section>
-          <section>
-            <h1>Addressable lights</h1>
-          </section>
-          <section>
-            <h3>{A: [{n:0}, {n: 50}]}</h3>
-          </section>
-
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>HTML &rarr; Fairy Lights</h2>
-            <pre><code data-trim>
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>HTML &rarr; Fairy Lights</h2>
+          <pre><code data-trim>
               &lt;ol&gt;
                 &lt;li&gt;&lt;/li&gt;
                 &lt;li&gt;&lt;/li&gt;
@@ -210,47 +200,43 @@
                 li:nth-child(2n) {background: red}
               &lt;/style&gt;
             </code></pre>
-          </section>
-          <section>
-            <iframe class="fullscreen" data-lantern-src="/scripts/css.html"></iframe>
-          </section>
-
-          <section>
-            <h2>An Abstraction</h2>
-          </section>
-          <section>
-            <h3>the quality of dealing with ideas rather than events.</h3>
-          </section>
+        </section>
+        <section>
+          <iframe class="fullscreen" data-lantern-src="/scripts/css.html"></iframe>
         </section>
 
+        <section>
+          <h2>An Abstraction</h2>
+        </section>
+        <section>
+          <h3>the quality of dealing with ideas rather than events.</h3>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <h1>Improving our abstraction</h1>
+        </section>
+        <section>
+          <h1>Position</h1>
+        </section>
+        <section>
+          <h3>{A: [{n:0, x: 0}, {n: 50, x: 1}]}</h3>
+        </section>
+        <section>
+          <h3>WebGL</h3>
+        </section>
+
+        <section data-background-size="contain" data-background="images/webgl.png">
+        </section>
+
+        <section data-background-size="contain" data-background="images/webgl-multi.png">
+        </section>
 
         <section>
-          <section>
-            <h1>Improving our abstraction</h1>
-          </section>
-          <section>
-            <h1>Position</h1>
-          </section>
-          <section>
-            <h3>{A: [{n:0, x: 0}, {n: 50, x: 1}]}</h3>
-          </section>
-          <section>
-            <h3>WebGL</h3>
-          </section>
-
-          <section
-            data-background-size="contain"
-            data-background="images/webgl.png">
-          </section>
-
-          <section
-            data-background-size="contain"
-            data-background="images/webgl-multi.png">
-          </section>
-
-          <section>
-            <h1>THREE.js</h1>
-            <pre><code data-trim>
+          <h1>THREE.js</h1>
+          <pre><code data-trim>
               const mesh = new THREE.SphereGeometry(size, 8, 8)
               mesh.setPosition(5,4,3)
 
@@ -258,86 +244,78 @@
                 { color: Math.random() * 0xffffff }
               )
             </code></pre>
-          </section>
+        </section>
 
-          <section
-            data-background-size="contain"
-            data-background="images/graph-webgl-1.svg">
-          </section>
+        <section data-background-size="contain" data-background="images/graph-webgl-1.svg">
+        </section>
 
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>4d noise</h2>
-            <pre><code data-trim>
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>4d noise</h2>
+          <pre><code data-trim>
               mesh.forEach(m =>
                 m.setColor(
                   noise(m.x, m.y, m.z, time)
                 )
               )
             </code></pre>
-          </section>
-
-          <section>
-            <iframe data-lantern-src="/scripts/ambient.html" class="fullscreen"></iframe>
-          </section>
-
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>Ripples</h2>
-          </section>
-
-          <section>
-            <iframe data-lantern-src="/scripts/ripples.html" class="fullscreen"></iframe>
-          </section>
-
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>Input 1</h2>
-          </section>
-
-          <section>
-            <iframe data-lantern-src="/scripts/webaudio.html" class="fullscreen"></iframe>
-          </section>
-
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>Input 2</h2>
-          </section>
-
-          <section>
-            <iframe data-lantern-src="/scripts/leap.html" class="fullscreen"></iframe>
-          </section>
         </section>
 
         <section>
+          <iframe data-lantern-src="/scripts/ambient.html" class="fullscreen"></iframe>
+        </section>
 
-          <section>
-            <h1>Abstractions</h1>
-          </section>
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>Ripples</h2>
+        </section>
 
-          <section>
-            <h1>Misaligned</h1>
-          </section>
+        <section>
+          <iframe data-lantern-src="/scripts/ripples.html" class="fullscreen"></iframe>
+        </section>
 
-          <section
-            data-background-size="contain"
-            data-background="images/graph-webgl-1.svg">
-          </section>
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>Input 1</h2>
+        </section>
 
-          <section
-            data-background-size="contain"
-            data-background="images/graph-webgl-2.svg">
-          </section>
+        <section>
+          <iframe data-lantern-src="/scripts/webaudio.html" class="fullscreen"></iframe>
+        </section>
 
-          <section
-            data-background-size="contain"
-            data-background="images/webgl-3.png">
-          </section>
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>Input 2</h2>
+        </section>
 
-          <section class="left">
-            <h5>Demo</h5>
-            <h2>Vertex shaded LEDs</h2>
-            <pre><code data-trim>
+        <section>
+          <iframe data-lantern-src="/scripts/leap.html" class="fullscreen"></iframe>
+        </section>
+      </section>
+
+      <section>
+
+        <section>
+          <h1>Abstractions</h1>
+        </section>
+
+        <section>
+          <h1>Misaligned</h1>
+        </section>
+
+        <section data-background-size="contain" data-background="images/graph-webgl-1.svg">
+        </section>
+
+        <section data-background-size="contain" data-background="images/graph-webgl-2.svg">
+        </section>
+
+        <section data-background-size="contain" data-background="images/webgl-3.png">
+        </section>
+
+        <section class="left">
+          <h5>Demo</h5>
+          <h2>Vertex shaded LEDs</h2>
+          <pre><code data-trim>
               precision mediump float;
               varying vec3 vPosition;
               uniform float t;
@@ -487,12 +465,12 @@
     <script>
 
 
-      const qs  = document.querySelector.bind(document)
+      const qs = document.querySelector.bind(document)
       const qsa = document.querySelectorAll.bind(document)
 
       const settings = window.setttings = {}
 
-      if(window.NON_INTERACTIVE) {
+      if (window.NON_INTERACTIVE) {
         Object.assign(settings, {
           "development": true,
           "lantern": "",
@@ -504,22 +482,22 @@
         qs('#setup').remove()
       } else {
 
-        for(let input of qsa('#settings input[name]')) {
+        for (let input of qsa('#settings input[name]')) {
 
           // urgh
-          if(input.type == 'checkbox') {
-             setttings[input.name] = input.checked = !!localStorage.getItem(`config:${input.name}`)
-             input.addEventListener('change', ({target}) => {
-               const v = target.checked;
-               settings[target.name] = !!v
-               localStorage.setItem(`config:${target.name}`, v ? 'on' :'')
-             })
-             continue
+          if (input.type == 'checkbox') {
+            setttings[input.name] = input.checked = !!localStorage.getItem(`config:${input.name}`)
+            input.addEventListener('change', ({ target }) => {
+              const v = target.checked;
+              settings[target.name] = !!v
+              localStorage.setItem(`config:${target.name}`, v ? 'on' : '')
+            })
+            continue
           }
 
           setttings[input.name] = input.value = localStorage.getItem(`config:${input.name}`)
 
-          input.addEventListener('change', ({target}) =>
+          input.addEventListener('change', ({ target }) =>
             localStorage.setItem(
               `config:${target.name}`,
               setttings[target.name] = target.value
@@ -534,7 +512,7 @@
         a.href = settings.lantern
         let { origin } = a
 
-        if(!settings.lantern) {
+        if (!settings.lantern) {
           origin = 'offline'
         }
 
@@ -542,11 +520,11 @@
 
         const res = await fetch(settings.layout)
 
-        if(res.status !== 200) throw new Error(`Layout ${res.status}ed`)
+        if (res.status !== 200) throw new Error(`Layout ${res.status}ed`)
 
         const layout = await res.json()
 
-        const {width, height} = Reveal.getConfig()
+        const { width, height } = Reveal.getConfig()
 
         const hash = btoa(JSON.stringify({
           development: settings.development,
@@ -556,13 +534,13 @@
           dark: true,
         }))
 
-        for(let {dataset} of qsa('[data-lantern-src]')  ) {
+        for (let { dataset } of qsa('[data-lantern-src]')) {
           dataset.src = `${origin}${dataset.lanternSrc}#${hash}`
         }
       }
 
       const status = text => {
-        if(qs('#settings-error')) {
+        if (qs('#settings-error')) {
           qs('#settings-error').textContent = text
         } else {
           console.log("STATUS: ", text)
@@ -573,10 +551,10 @@
         setsrcs()
           .then(
             () => status('🌈'),
-            e  => status(e)
+            e => status(e)
           )
 
-      for(let input of qsa('input[name=lantern], input[name=layout]')) {
+      for (let input of qsa('input[name=lantern], input[name=layout]')) {
         input.addEventListener('change', updatesrcs)
       }
 
@@ -598,7 +576,7 @@
         ]
       });
 
-      Reveal.addEventListener( 'slidechanged', () => {
+      Reveal.addEventListener('slidechanged', () => {
         document.body.style.cursor = 'none'
       })
       window.addEventListener('mousemove', () => {
@@ -606,7 +584,7 @@
       })
 
 
-      const {width, height} = Reveal.getConfig()
+      const { width, height } = Reveal.getConfig()
 
       // set css vars for fullscreen
       const rootStyle = document.body.style
@@ -619,15 +597,15 @@
       const sw = qs('#settings input[name=width]')
       const sh = qs('#settings input[name=height]')
 
-      if(sw && sh) {
-        const setw = () => sw.placeholder = parseFloat(sh.value) * (width/height)
-        const seth = () => sh.placeholder = parseFloat(sw.value) / (width/height)
+      if (sw && sh) {
+        const setw = () => sw.placeholder = parseFloat(sh.value) * (width / height)
+        const seth = () => sh.placeholder = parseFloat(sw.value) / (width / height)
 
         sh.addEventListener('input', setw)
         sw.addEventListener('input', seth)
 
-        if(sh.value) setw()
-        if(sw.value) seth()
+        if (sh.value) setw()
+        if (sw.value) seth()
       }
 
     </script>
